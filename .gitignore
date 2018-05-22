@@ -1,4 +1,7 @@
-calculator/
+Calculator/
 *.ldf
 *.lpf
 *.sty
+*.ini
+*.html
+*.xml
