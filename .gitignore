@@ -1,5 +1,6 @@
 Calculator/
 impl1/
+.recovery
 *.ldf
 *.lpf
 *.sty
