@@ -2,7 +2,7 @@ module shiftreg #(parameter N = 4)
 				 (input logic 			clk,
 				  input logic 			reset, load,
 				  input logic 			sin,
-				  input logic [N–1:0] 	d,
+				  input logic [N–1:0] 	value,
 				  output logic [N–1:0] 	q,
 				  output logic 			sout);
 					  
