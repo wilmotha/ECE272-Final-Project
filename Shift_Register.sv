@@ -1,4 +1,4 @@
-module shiftreg #(parameter N = 4)
+module shiftreg #(parameter N = 5)
 				 (input logic 			clk,
 				  input logic 			reset, load,
 				  input logic 			sin,
