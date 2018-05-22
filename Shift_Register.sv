@@ -5,7 +5,8 @@ module shiftreg #(parameter N = 4)
 				  input logic [N–1:0] 	value,
 				  output logic [N–1:0] 	q,
 				  output logic 			sout);
-					  
+					
+if(value != 0)					
 	always_ff @(posedge clk, posedge reset)
 		if (reset) 
 			q <= 0;
@@ -15,4 +16,6 @@ module shiftreg #(parameter N = 4)
 			q <= {q[N–2:0], sin};
 			
 	assign sout = q[N–1];
+else
+	
 endmodule
