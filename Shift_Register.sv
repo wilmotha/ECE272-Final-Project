@@ -1,21 +1,17 @@
-module shiftreg #(parameter N = 5)
-				 (input logic 			clk,
-				  input logic 			reset, load,
-				  input logic 			sin,
-				  input logic [N–1:0] 	value,
-				  output logic [N–1:0] 	q,
-				  output logic 			sout);
-					
-if(value != 0)					
-	always_ff @(posedge clk, posedge reset)
-		if (reset) 
-			q <= 0;
-		else if (load) 
-			q <= d;
-		else 
-			q <= {q[N–2:0], sin};
-			
-	assign sout = q[N–1];
-else
-	
+module ram #(parameter N = 3, M = 5)
+			(input logic 			clk,
+			 input logic 			reset,
+			 input logic 			we,
+			 input logic [N–1:0] 	adr,
+			 input logic [M–1:0] 	value,
+			 output logic [M–1:0] 	dout);
+			 
+	logic [M–1:0] mem [2**N–1:0];
+	always_ff @(posedge clk, negedge reset)
+		if (!reset)
+			mem <= 0;
+		else if (we) 
+			mem [adr] <= value;
+
+	assign dout = mem[adr];
 endmodule
