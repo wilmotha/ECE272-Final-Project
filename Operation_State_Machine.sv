@@ -1,6 +1,5 @@
 module Operation_State_Machine(input logic clk_manual,
 					input logic reset_n,
-					input logic reset,
 					output logic[2:0] num_state);
 
 logic [2:0] state_n; //next state

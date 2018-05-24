@@ -11,7 +11,7 @@ always_comb
 		begin 
 		if (value >= 0 && value <= 10)
 			begin
-				if(adr_current == 1)    						//if the address in the memory already has both numbers, go to the arithmatic state
+				if(adr_current == 1)    					//if the address in the memory already has both numbers, go to the arithmatic state
 					begin
 						clk_manual = TRUE;
 						value = ram( 1, 1, 1, adr_current, value, value);	
@@ -19,7 +19,7 @@ always_comb
 				else 
 					value = ram( 1, 1, 1, adr_current, value, value);	
 			
-				adr_next = adr_current + 1; 			//else increment the address so we take in the second number value
+				adr_next = adr_current + 1; 				//else increment the address so we take in the second number value
 			end
 		end	
 	else if (state == 3'b001)

@@ -30,18 +30,6 @@ module LED_top_module(
 		/* Define modules here */
 		/***********************/
 		/*
-		parser in( .b(button),
-					.thous(thous),
-					.hunds(hundr),
-					.tens(tens),
-					.ones(ones));
-		
-		mux4 which( .thous(thous),
-						.hundr(hundr),
-						.tens(tens),
-						.ones(ones),
-						.s(state),
-						.y(muxToDec));
 						
 		decoder fin( .data(muxToDec),
 							.segments(sevenseg)); */
