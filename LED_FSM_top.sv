@@ -4,7 +4,7 @@ module LED_top_module(
 	/* to the whole FPGA here */
 	/**************************/
 	input logic [7:0] button,
-	input logic reset_n, //be sure to set this input to PullUp, or connect the pin to 3.3V
+	input logic reset_n,
 	output logic [6:0] sevenseg,
 	output logic [2:0] state
 	);
@@ -13,6 +13,11 @@ module LED_top_module(
 		/*******************************/
 		logic clk;		//used for the oscillator's 2.08 MHz clock
 		logic clk_slow;	//used for slowed down, 5 Hz clock
+		logic clk_manual = 1'b1; //Initialize the manual clock to start
+		logic clk_manual_memory;
+		
+		logic [2:0] num_state; 	//look at Operation_State_Machine to understand this
+		logic [2:0] adr;			//Adress in the memory
 		
 		logic [3:0] thous;
 		logic [3:0] hundr;
@@ -24,6 +29,7 @@ module LED_top_module(
 		/***********************/
 		/* Define modules here */
 		/***********************/
+		/*
 		parser in( .b(button),
 					.thous(thous),
 					.hunds(hundr),
@@ -38,7 +44,7 @@ module LED_top_module(
 						.y(muxToDec));
 						
 		decoder fin( .data(muxToDec),
-							.segments(sevenseg));
+							.segments(sevenseg)); */
 		
 		//This is an instance of a special, built in module that accesses our chip's oscillator
 		OSCH #("2.08") osc_int (	//"2.08" specifies the operating frequency, 2.08 MHz.

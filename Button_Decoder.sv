@@ -1,7 +1,9 @@
 module Button_Decoder(input  logic buttons[15:0],
 					  output logic value[4:0]);
-	assign buttons = ~buttons
+					  
+	assign buttons = ~buttons;
 	
+always_comb
 	case(buttons)
 		1:		value = 1;
 		2:		value = 2;
@@ -20,5 +22,6 @@ module Button_Decoder(input  logic buttons[15:0],
 		16384:	value = 15;
 		32768:	value = 16;
 		default: value = 0;
+	endcase
 		
 endmodule
