@@ -1,5 +1,5 @@
-module Button_Decoder(input  logic buttons[15:0],
-					  output logic value[4:0]);
+module Button_Decoder(input  logic [15:0] buttons,
+					  output logic [4:0] value);
 					  
 	assign buttons = ~buttons;
 	
