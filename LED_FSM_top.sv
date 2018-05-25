@@ -3,11 +3,10 @@ module LED_top_module(
 	/* Set inputs and outputs */
 	/* to the whole FPGA here */
 	/**************************/
-	input logic [15:0] button,
 	input logic reset_n,
+	 input logic [15:0] buttons,
 	output logic [6:0] sevenseg,
-	output logic [2:0] state
-	);
+	output logic [2:0] state);
 		/*******************************/
 		/* Set internal variables here */
 		/*******************************/
@@ -16,7 +15,7 @@ module LED_top_module(
 		logic clk_manual;
 	
 		logic [2:0] num_state; 	//look at Operation_State_Machine to understand this
-		logic [2:0] adr;			//Adress in the memory
+		logic [2:0] adr;		//Adress in the memory
 		logic we;
 	
 		logic [4:0] value;
@@ -24,15 +23,14 @@ module LED_top_module(
 		
 		/***********************/
 		/* Define modules here */
-		/***********************/
-		
-		Button_Decoder pressed( .buttons(button),
-									.value(value));
-									
+		/***********************/	
 		Button_Verify verify( .num_state(num_state),
 									.value(value),
 									.adr_current(adr),
 									.clk_manual(clk_manual));
+									
+		Button_Decoder button_press(.buttons(buttons), 
+										.value(value));
 		
 		mux4 which( .num_state(num_state),
  						.s(state),
