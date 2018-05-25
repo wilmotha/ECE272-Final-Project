@@ -6,8 +6,8 @@ module mux4 ( 	input logic [2:0] num_state,
 	//	of each digit from the memory
 	logic [3:0] thous;
 	logic [3:0] hundr;
-	logic [3:0] tens;
-	logic [3:0] ones;
+	logic [4:0] tens;
+	logic [4:0] ones;
 	
 	logic [2:0] adr;
 	logic [2:0] adr_next;
