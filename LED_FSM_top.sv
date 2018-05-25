@@ -3,7 +3,7 @@ module LED_top_module(
 	/* Set inputs and outputs */
 	/* to the whole FPGA here */
 	/**************************/
-	input logic [7:0] button,
+	input logic [15:0] button,
 	input logic reset_n,
 	output logic [6:0] sevenseg,
 	output logic [2:0] state
@@ -13,26 +13,46 @@ module LED_top_module(
 		/*******************************/
 		logic clk;		//used for the oscillator's 2.08 MHz clock
 		logic clk_slow;	//used for slowed down, 5 Hz clock
-		logic clk_manual = 1'b1; //Initialize the manual clock to start
-		logic clk_manual_memory;
-		
+		logic clk_manual;
+	
 		logic [2:0] num_state; 	//look at Operation_State_Machine to understand this
 		logic [2:0] adr;			//Adress in the memory
-		
-		logic [3:0] thous;
-		logic [3:0] hundr;
-		logic [3:0] tens;
-		logic [3:0] ones;
-		
+		logic we;
+	
+		logic [4:0] value;
 		logic [3:0] muxToDec;
 		
 		/***********************/
 		/* Define modules here */
 		/***********************/
-		/*
-						
+		
+		Button_Decoder pressed( .buttons(button),
+									.value(value));
+									
+		Button_Verify verify( .num_state(num_state),
+									.value(value),
+									.adr_current(adr),
+									.clk_manual(clk_manual));
+		
+		mux4 which( .num_state(num_state),
+ 						.s(state),
+ 						.y(muxToDec));
+
+
 		decoder fin( .data(muxToDec),
-							.segments(sevenseg)); */
+							.segments(sevenseg));
+							
+		Operation_State_Machine operation( .clk_manual(clk_manual),
+												.reset_n(reset_n),
+												.num_state(num_state));
+												
+		ram memory( .clk_manual(clk_manual),
+						.reset_n(reset_n),
+						.we(we),
+						.adr(adr),
+						.value(value),
+						.dout( ),
+						.adr_next(adr));
 		
 		//This is an instance of a special, built in module that accesses our chip's oscillator
 		OSCH #("2.08") osc_int (	//"2.08" specifies the operating frequency, 2.08 MHz.
