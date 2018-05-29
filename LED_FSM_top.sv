@@ -22,7 +22,7 @@ module LED_top_module(
 		logic [4:0] value;
 		logic [3:0] muxToDec;
 		
-		logic [4:0] tens_mem_1, ones_mem_1, tens_mem_2, ones_mem_2;
+		logic [4:0] tens_mem_1, ones_mem_1, arithmetic, tens_mem_2, ones_mem_2;
 		
 		logic [3:0] thous;
 		logic [3:0] hundr;
@@ -68,6 +68,7 @@ module LED_top_module(
 
 			.tens_mem_1(tens_mem_1),
 			.ones_mem_1(ones_mem_1),
+			.arithmetic(arithmetic),
 			.tens_mem_2(tens_mem_2),
 			.ones_mem_2(ones_mem_2),
 			.adr_next(adr));
