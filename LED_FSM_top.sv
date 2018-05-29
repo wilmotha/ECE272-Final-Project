@@ -46,6 +46,7 @@ module LED_top_module(
 			.value(value),
 			
 			.dout(),
+			.dout_2(),
 			.adr_next(adr));
 		
 							
