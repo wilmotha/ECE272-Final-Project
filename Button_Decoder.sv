@@ -1,9 +1,9 @@
 
-module Button_Decoder(input logic [15:0] button,
+module Button_Decoder(input logic [15:0] buttons,
 					  output logic [4:0] value);
 					  
 always_comb
-		case(~button)
+		case(~buttons)
 			1:		value = 1;
 			2:		value = 2;
 			4:		value = 3;
