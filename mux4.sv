@@ -33,7 +33,7 @@ always_comb
 			enable_math = 1;
 		end
 			math doMath(
-				.num000(tens_mem_1)
+				.num000(tens_mem_1),
 				.num001(ones_mem_1),
 				.num011(tens_mem_2),
 				.num100(ones_mem_2),
