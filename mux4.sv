@@ -43,5 +43,4 @@ always_comb
 				.total(total)
 				
 				);
-	
 endmodule
