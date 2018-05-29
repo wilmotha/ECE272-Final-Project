@@ -21,4 +21,5 @@ module ram	(input logic 			clk_manual,
 
 	assign dout = mem[adr];
 	assign dout_2 = mem[adr+1];
+
 endmodule
