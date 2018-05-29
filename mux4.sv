@@ -1,68 +1,28 @@
-module mux4 ( 	input logic [2:0] num_state,
-				input logic [2:0] s,
+module mux4 ( 	input logic [4:0] tens_mem_1, ones_mem_1, tens_mem_2, ones_mem_2,
+				input logic [2:0] num_state,
 				output logic [3:0] thous,
 				output logic [3:0] hundr,
 				output logic [4:0] tens,
-				output logic [4:0] ones,
-				output logic store);
-				
-	//Changed this to be wires inside the module, because we will acess the value
-	//	of each digit from the memory
-	logic [3:0] thous;
-	logic [3:0] hundr;
-	logic [4:0] tens;
-	logic [4:0] ones;
-	
-	logic [2:0] adr;
-	logic [2:0] adr_next;
+				output logic [4:0] ones );
+			
 
 always_comb
 	if(num_state == 3'b000) 
-		begin
-			adr = 3'b000;
-			
+		begin			
 			thous = 11;							//Makes the Decoder.sv output all 1's to the seven seg (nothing is displayed)
 			hundr = 11;							//Same as above 
-			//tens = ram( 0, 1, 0, 3'b000, 0, tens);		//Access the frist address in the memory (look at the ram module to understand the random 0's and 1's)
-			//ones = ram( 0, 1, 0, 3'b001, 0, ones);		//Access the second address in the memory
+			tens = tens_mem_1;
+			ones = ones_mem_1;
 		end
-	else if (num_state == 3'b011)
+	else if (num_state == 3'b010)
 		begin
-			adr = 3'b011;
-			
 			thous = 11;
 			hundr = 11;
-			//tens = ram( 0, 1, 0, 3'b011, 0, tens);
-			//ones = ram( 0, 1, 0, 3'b100, 0, ones);
+			tens = tens_mem_2;
+			ones = ones_mem_2;
 		end
-	//else if (num_state == 3'b100)
+	//else if (num_state == 3'b011)
 		//ADD math modules
 		
-/*		
-	ram memory(.clk_manual(0),
-					.reset_n(1),
-					.we(0), 
-					.adr(adr), 
-					.value( ), 
-					.dout(tens), 
-					.adr_next( ),
-					.dout_2(ones)
-					);
-					
-
-  
-		
-				
-//default multiplexer that ouputs to the Decoder.sv
-always_comb
-	begin
-		case(s)
-			0: y = ones;
-			1: y = tens;
-			3: y = hundr;
-			4: y = thous;
-			default: y = ones;
-		endcase
-	end
-*/		
+	
 endmodule

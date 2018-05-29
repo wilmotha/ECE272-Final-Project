@@ -22,6 +22,8 @@ module LED_top_module(
 		logic [4:0] value;
 		logic [3:0] muxToDec;
 		
+		logic [4:0] tens_mem_1, ones_mem_1, tens_mem_2, ones_mem_2;
+		
 		logic [3:0] thous;
 		logic [3:0] hundr;
 		logic [4:0] tens;
@@ -45,14 +47,16 @@ module LED_top_module(
 			.clk_manual(clk_manual));
 	
 			
-	mux4 which( 
+	mux4 which( .tens_mem_1(tens_mem_1),
+			.ones_mem_1(ones_mem_1),
+			.tens_mem_2(tens_mem_2),
+			.ones_mem_2(ones_mem_2),
 			.num_state(num_state),
-			.s(state),
 			
 			.thous(thous),
-			.hundr(hundr)
-			//.tens(tens),
-			//.ones(ones)
+			.hundr(hundr),
+			.tens(tens),
+			.ones(ones)
 			);
 	
 	ram memory( 
@@ -62,8 +66,10 @@ module LED_top_module(
 			.adr(adr),
 			.value(value),
 
-			.dout(tens),
-			.dout_2(ones),
+			.tens_mem_1(tens_mem_1),
+			.ones_mem_1(ones_mem_1),
+			.tens_mem_2(tens_mem_2),
+			.ones_mem_2(ones_mem_2),
 			.adr_next(adr));
 			
 	mux2 test(
@@ -75,23 +81,6 @@ module LED_top_module(
 			
 			.y(muxToDec));
 	
-
-	/*ram memory(.clk_manual(0),
-					.reset_n(1),
-					.we(0), 
-					.adr(adr), 
-					.value( ), 
-					.dout(tens), 
-					.adr_next( ));
-					
-	ram memory_1(.clk_manual(0),
-					.reset_n(1),
-					.we(0), 
-					.adr(adr), 
-					.value( ), 
-					.dout(ones), 
-					.adr_next( ));
-  */
 	
 		Operation_State_Machine operation( 
 			.clk_manual(clk_manual),

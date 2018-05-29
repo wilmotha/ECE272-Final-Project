@@ -3,7 +3,7 @@ module ram	(input logic 			clk_manual,
 			 input logic 			we, 	//Write Enable
 			 input logic [2:0] 		adr,	//Address
 			 input logic [4:0] 		value,
-			 output logic [4:0] 	dout, dout_2,
+			 output logic [4:0] 	tens_mem_1, ones_mem_1, tens_mem_2, ones_mem_2,
 			 output logic [2:0] 	adr_next);
 			 
 	logic [4:0] mem [2**3-1:0];	//No clue what this is
@@ -19,7 +19,9 @@ module ram	(input logic 			clk_manual,
 		else
 			adr_next <= adr;
 
-	assign dout = mem[adr];
-	assign dout_2 = mem[adr+1];
-
+assign tens_mem_1 = mem[3'b000];
+assign ones_mem_1 = mem[3'b001];
+assign tens_ones_2= mem[3'b011];
+assign ones_mem_2 = mem[3'b100];
+	
 endmodule
