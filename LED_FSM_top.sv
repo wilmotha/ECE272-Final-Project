@@ -5,6 +5,7 @@ module LED_top_module(
 	/**************************/
 	input logic reset_n,
 	input logic [15:0] button,
+	
 	output logic [6:0] sevenseg,
 	output logic [2:0] state);
 		/*******************************/
@@ -21,15 +22,20 @@ module LED_top_module(
 		logic [4:0] value;
 		logic [3:0] muxToDec;
 		
+		logic [3:0] thous;
+		logic [3:0] hundr;
+		logic [4:0] tens;
+		logic [4:0] ones;
+	
 		/***********************/
 		/* Define modules here */
 		/***********************/	
-							
+	
 		Button_Decoder button_press(
 			.buttons(button), 
 			
 			.value(value));
-		
+	
 		Button_Verify verify( 
 			.num_state(num_state),
 			.value(value),
@@ -37,37 +43,68 @@ module LED_top_module(
 			
 			.we(we),
 			.clk_manual(clk_manual));
-		
-		ram memory( 
+	
+			
+	mux4 which( 
+			.num_state(num_state),
+			.s(state),
+			
+			.thous(thous),
+			.hundr(hundr)
+			//.tens(tens),
+			//.ones(ones)
+			);
+	
+	ram memory( 
 			.clk_manual(clk_manual),
 			.reset_n(reset_n),
 			.we(we),
 			.adr(adr),
 			.value(value),
-			
-			.dout(),
-			.dout_2(),
+
+			.dout(tens),
+			.dout_2(ones),
 			.adr_next(adr));
-		
-							
+			
+	mux2 test(
+			.thous(thous),
+			.hundr(hundr),
+			.tens(tens),
+			.ones(ones),
+			.s(state),
+			
+			.y(muxToDec));
+	
+
+	/*ram memory(.clk_manual(0),
+					.reset_n(1),
+					.we(0), 
+					.adr(adr), 
+					.value( ), 
+					.dout(tens), 
+					.adr_next( ));
+					
+	ram memory_1(.clk_manual(0),
+					.reset_n(1),
+					.we(0), 
+					.adr(adr), 
+					.value( ), 
+					.dout(ones), 
+					.adr_next( ));
+  */
+	
 		Operation_State_Machine operation( 
 			.clk_manual(clk_manual),
 			.reset_n(reset_n),
 			
 			.num_state(num_state));
 		
-
-		mux4 which( 
-			.num_state(num_state),
-			.s(state),
-			
-			.y(muxToDec));
 	
-
-		decoder fin( 
-		.data(muxToDec),
 		
-		.segments(sevenseg));
+		decoder fin( 
+			.data(muxToDec),
+		
+			.segments(sevenseg));
 												
 
 		

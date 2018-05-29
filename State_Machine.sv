@@ -3,7 +3,7 @@ module state_machine( //example of a Moore type state machine
 	input logic reset_n,
 	
 	output logic [2:0] state //The state outputted by this state machine
-		);
+);
 		
 		//next state register
 		logic [2:0] state_n;
