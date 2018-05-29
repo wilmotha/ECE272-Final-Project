@@ -26,7 +26,7 @@ always_comb
 		end
 	else if (num_state == 3'b011)
 		begin
-			Math doMath(
+			math doMath(
 				.numm000(thous),
 				.numm001(hundr),
 				.numm011(tens),
