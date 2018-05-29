@@ -1,11 +1,14 @@
 module mux4 ( 	input logic [4:0] tens_mem_1, ones_mem_1, tens_mem_2, ones_mem_2,
 				input logic [2:0] num_state,
+				input logic [4:0] arithmetic,
 				output logic [3:0] thous,
 				output logic [3:0] hundr,
 				output logic [4:0] tens,
 				output logic [4:0] ones );
 			
 
+	logic [13:0] total;
+	
 always_comb
 	if(num_state == 3'b000) 
 		begin			
@@ -21,8 +24,16 @@ always_comb
 			tens = tens_mem_2;
 			ones = ones_mem_2;
 		end
-	//else if (num_state == 3'b011)
-		//ADD math modules
-		
+	else if (num_state == 3'b011)
+		begin
+			math doMath(
+				.numm000(thous),
+				.numm001(hundr),
+				.numm011(tens),
+				.numm100(ones),
+				.arithmetic(arithmetic),
+			
+				.total(total));
+		end
 	
 endmodule
