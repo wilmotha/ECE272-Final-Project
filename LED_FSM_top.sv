@@ -3,42 +3,54 @@ module LED_top_module(
 	/* Set inputs and outputs */
 	/* to the whole FPGA here */
 	/**************************/
-	input logic [7:0] button,
-	input logic reset_n, //be sure to set this input to PullUp, or connect the pin to 3.3V
+	input logic reset_n,
+	 input logic [15:0] buttons,
 	output logic [6:0] sevenseg,
-	output logic [2:0] state
-	);
+	output logic [2:0] state);
 		/*******************************/
 		/* Set internal variables here */
 		/*******************************/
 		logic clk;		//used for the oscillator's 2.08 MHz clock
 		logic clk_slow;	//used for slowed down, 5 Hz clock
-		
-		logic [3:0] thous;
-		logic [3:0] hundr;
-		logic [3:0] tens;
-		logic [3:0] ones;
-		
+		logic clk_manual;
+	
+		logic [2:0] num_state; 	//look at Operation_State_Machine to understand this
+		logic [2:0] adr;		//Adress in the memory
+		logic we;
+	
+		logic [4:0] value;
 		logic [3:0] muxToDec;
 		
 		/***********************/
 		/* Define modules here */
-		/***********************/
-		parser in( .b(button),
-					.thous(thous),
-					.hunds(hundr),
-					.tens(tens),
-					.ones(ones));
+		/***********************/	
+		Button_Verify verify( .num_state(num_state),
+									.value(value),
+									.adr_current(adr),
+									.clk_manual(clk_manual));
+									
+		Button_Decoder button_press(.buttons(buttons), 
+										.value(value));
 		
-		mux4 which( .thous(thous),
-						.hundr(hundr),
-						.tens(tens),
-						.ones(ones),
-						.s(state),
-						.y(muxToDec));
-						
+		mux4 which( .num_state(num_state),
+ 						.s(state),
+ 						.y(muxToDec));
+
+
 		decoder fin( .data(muxToDec),
 							.segments(sevenseg));
+							
+		Operation_State_Machine operation( .clk_manual(clk_manual),
+												.reset_n(reset_n),
+												.num_state(num_state));
+												
+		ram memory( .clk_manual(clk_manual),
+						.reset_n(reset_n),
+						.we(we),
+						.adr(adr),
+						.value(value),
+						.dout( ),
+						.adr_next(adr));
 		
 		//This is an instance of a special, built in module that accesses our chip's oscillator
 		OSCH #("2.08") osc_int (	//"2.08" specifies the operating frequency, 2.08 MHz.
