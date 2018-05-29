@@ -30,6 +30,7 @@ always_comb
 		end
 	else if (num_state == 3'b011)
 		begin
+
 			enable_math = 1;
 
 		end
