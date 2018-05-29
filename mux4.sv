@@ -1,6 +1,10 @@
 module mux4 ( 	input logic [2:0] num_state,
 				input logic [2:0] s,
-				output logic [3:0] y);
+				output logic [3:0] thous,
+				output logic [3:0] hundr,
+				output logic [4:0] tens,
+				output logic [4:0] ones,
+				output logic store);
 				
 	//Changed this to be wires inside the module, because we will acess the value
 	//	of each digit from the memory
@@ -34,7 +38,7 @@ always_comb
 	//else if (num_state == 3'b100)
 		//ADD math modules
 		
-		
+/*		
 	ram memory(.clk_manual(0),
 					.reset_n(1),
 					.we(0), 
@@ -53,7 +57,7 @@ always_comb
   
 		
 				
-	//default multiplexer that ouputs to the Decoder.sv
+//default multiplexer that ouputs to the Decoder.sv
 always_comb
 	begin
 		case(s)
@@ -64,5 +68,5 @@ always_comb
 			default: y = ones;
 		endcase
 	end
-		
+*/		
 endmodule
