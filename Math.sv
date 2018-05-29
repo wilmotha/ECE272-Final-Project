@@ -1,5 +1,5 @@
-module math(input logic [5:0] num000, num001, num011, num100,
-			input logic [5:0] arithmetic,
+module math(input logic [4:0] num000, num001, num011, num100,
+			input logic [4:0] arithmetic,
 			input logic enable,
 			output logic [13:0] total
 			);

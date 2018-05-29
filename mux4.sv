@@ -33,14 +33,23 @@ always_comb
 			enable_math = 1;
 		end
 			math doMath(
-				.num000(thous),
-				.num001(hundr),
-				.num011(tens),
-				.num100(ones),
+				.num000(tens_mem_1)
+				.num001(ones_mem_1),
+				.num011(tens_mem_2),
+				.num100(ones_mem_2),
 				.arithmetic(arithmetic),
 				.enable(enable_math),
 			
 				.total(total)
 				
 				);
+				
+				Paser splitNum (
+				.num(total),
+				.enable(enable_math),
+				.z0(thous),
+				.z1(hundr),
+				.z2(tens),
+				.z3(ones) );
+	
 endmodule
