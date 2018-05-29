@@ -4,7 +4,7 @@ module Button_Verify(input [2:0] num_state,
 					 output logic clk_manual,
 					 output logic we);
 					 
-always
+always_comb
 	begin
 		if (num_state == 3'b010 && value == 16 && adr_current == 4)	//if all values are in the memory, and enter was pressed advance to the result state.
 			clk_manual = 1'b1;
