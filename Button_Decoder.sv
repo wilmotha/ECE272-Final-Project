@@ -1,7 +1,9 @@
 module Button_Decoder(input  logic buttons[15:0],
 					  output logic value[4:0]);
+	
 	assign buttons = ~buttons
 	
+	always_comb
 	case(buttons)
 		1:		value = 1;
 		2:		value = 2;
@@ -12,13 +14,13 @@ module Button_Decoder(input  logic buttons[15:0],
 		64:		value = 7;
 		128:	value = 8;
 		256:	value = 9;
-		512:	value = 10;
-		1024:	value = 11;
-		2048:	value = 12;
-		4096:	value = 13;
-		8192:	value = 14;
-		16384:	value = 15;
-		32768:	value = 16;
+		512:	value = 10;//0
+		1024:	value = 11;//add
+		2048:	value = 12;//subtract
+		4096:	value = 13;//multiplication
+		8192:	value = 14;//division
+		16384:	value = 15;//enter
+		32768:	value = 16;//reset
 		default: value = 0;
-		
+	endcase
 endmodule
