@@ -45,15 +45,11 @@ always_comb
 					.adr(adr), 
 					.value( ), 
 					.dout(tens), 
-					.adr_next( ));
+					.adr_next( ),
+					.dout_2(ones)
+					);
 					
-	ram memory_1(.clk_manual(0),
-					.reset_n(1),
-					.we(0), 
-					.adr(adr), 
-					.value( ), 
-					.dout(ones), 
-					.adr_next( ));
+
   
 		
 				

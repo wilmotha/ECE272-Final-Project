@@ -20,5 +20,6 @@ module ram	(input logic 			clk_manual,
 			adr_next <= adr;
 
 	assign dout = mem[adr];
-	assign doubt_2 = mem[adr+1];
+	assign dout_2 = mem[adr+1];
+
 endmodule
