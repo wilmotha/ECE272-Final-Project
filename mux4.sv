@@ -44,7 +44,7 @@ always_comb
 				
 				);
 				
-				Paser splitNum (
+			Parser splitNum (
 				.num(total),
 				.enable(enable_math),
 				.z0(thous),
