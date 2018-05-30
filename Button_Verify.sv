@@ -1,5 +1,5 @@
 module Button_Verify(input [2:0] num_state,
-					 input  logic value[4:0],
+					 input logic [4:0] value,
 					 input logic [2:0] adr_current,
 					 output logic clk_manual,
 					 output logic we);

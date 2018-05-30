@@ -1,6 +1,6 @@
-module Parser ( input logic [7:0] num,
+module Parser ( input logic [13:0] num,
 				input logic enable,
-				output logic [3:0] z0, z1, z2, z3);
+				output logic [4:0] z0, z1, z2, z3);
 				
 	
 	always_comb 
