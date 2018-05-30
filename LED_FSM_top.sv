@@ -19,13 +19,15 @@ module LED_top_module(
 		logic [2:0] adr;		//Adress in the memory
 		logic we;
 	
+		logic enable;
+		logic [13:0] total;
 		logic [4:0] value;
 		logic [3:0] muxToDec;
 		
 		logic [4:0] tens_mem_1, ones_mem_1, arithmetic, tens_mem_2, ones_mem_2;
 		
-		logic [3:0] thous;
-		logic [3:0] hundr;
+		logic [4:0] thous;
+		logic [4:0] hundr;
 		logic [4:0] tens;
 		logic [4:0] ones;
 	
@@ -53,10 +55,7 @@ module LED_top_module(
 			.ones_mem_2(ones_mem_2),
 			.num_state(num_state),
 			
-			.thous(thous),
-			.hundr(hundr),
-			.tens(tens),
-			.ones(ones)
+			.enable(enable)
 			);
 	
 	ram memory( 
@@ -81,6 +80,27 @@ module LED_top_module(
 			.s(state),
 			
 			.y(muxToDec));
+			
+	math doMath(
+				.num000(tens_mem_1),
+				.num001(ones_mem_1),
+				.num011(tens_mem_2),
+				.num100(ones_mem_2),
+				.num_state(num_state),
+				.arithmetic(arithmetic),
+				.enable(enable),
+			
+				.total(total)
+				
+				);
+				
+			Parser splitNum(
+				.num(total),
+				.enable(enable),
+				.z0(thous),
+				.z1(hundr),
+				.z2(tens),
+				.z3(ones) ); 
 	
 	
 		Operation_State_Machine operation( 

@@ -1,4 +1,5 @@
 module math(input logic [4:0] num000, num001, num011, num100,
+			input logic [2:0] num_state,
 			input logic [4:0] arithmetic,
 			input logic enable,
 			output logic [13:0] total
@@ -28,6 +29,15 @@ module math(input logic [4:0] num000, num001, num011, num100,
 					total = num_1 / num_2;
 				end
 			end
+		else if (enable == 0)
+			begin
+				if(num_state == 3'b000) 		
+					total = num_1;
+				else if (num_state == 3'b010)
+					total = num_2;
+			end
+			
+			
 endmodule		
 
 			
