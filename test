@@ -1,43 +1,32 @@
 vsim -gui work.Button_Decoder work.Button_Verify work.clock_counter work.decoder work.LED_top_module work.math work.mux2 work.mux4 work.Parser work.state_machine
 
-add wave /LED_top_module/button
-add wave /LED_top_module/num_state
-add wave /LED_top_module/adr
-add wave /LED_top_module/enable
-add wave /LED_top_module/clk_manual
-add wave /LED_top_module/verify/clk_manual
-add wave /LED_top_module/total 
-add wave /LED_top_module/value
-add wave /LED_top_module/tens_mem_1
-add wave /LED_top_module/ones_mem_1
-add wave /LED_top_module/tens_mem_2
-add wave /LED_top_module/ones_mem_2
-add wave /LED_top_module/arithmetic
-add wave /LED_top_module/button_press/buttons
-add wave /LED_top_module/button_press/value
-#add wave /LED_top_module/verify/*
-add wave /LED_top_module/doMath/total
-add wave /LED_top_module/doMath/num_1
-add wave /LED_top_module/doMath/num_2
+#Change wave button and sevenseg to radix binary for easier readability
+#Scroll though each state and view what the sevenseg output is
+#left most bit in sevenseg is a, rightmost is g
 
+
+#Add Top Level Inputs and Ouputs
+add wave /LED_top_module/reset_n
+add wave /LED_top_module/button
 add wave /LED_top_module/sevenseg
 add wave /LED_top_module/state
-add wave /LED_top_module/thous
-add wave /LED_top_module/hundr
-add wave /LED_top_module/tens
-add wave /LED_top_module/ones
 
+#Force reset to be 0 for 50 ps, thus reseting everything
 force /LED_top_module/button 2#1111_1111_1111_1111 @ 0
 force /LED_top_module/reset_n 0 @ 0
 force /LED_top_module/reset_n 1 @ 50
 
-force /LED_top_module/button 2#1111_1111_1111_1101 @ 50
-force /LED_top_module/button 2#1111_1111_1111_1110 @ 150
-force /LED_top_module/button 2#1111_1011_1111_1111 @ 250
-force /LED_top_module/button 2#1111_1111_1111_1101 @ 350
-force /LED_top_module/button 2#1111_1111_1111_1110 @ 450
 
-force /LED_top_module/button 2#1011_1111_1111_1111 @ 550
+#After the reset, start inputing button presses
+force /LED_top_module/button 2#1111_1111_1111_1101 @ 50   	# value = 2
+force /LED_top_module/button 2#1111_1111_1111_1110 @ 150	# value = 1
+force /LED_top_module/button 2#1111_1011_1111_1111 @ 250  	# value = 11
+force /LED_top_module/button 2#1111_1111_1111_1101 @ 350	# value = 2
+force /LED_top_module/button 2#1111_1111_1111_1110 @ 450	# value = 1
 
+force /LED_top_module/button 2#1011_1111_1111_1111 @ 550	# value = 15
+
+#cycle through each state every 10 ps
+force /LED_top_module/state 0 @ 0, 1 @ 10, 3 @ 20, 4 @ 30 -repeat 40
 
 run 650
