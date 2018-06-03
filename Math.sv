@@ -9,33 +9,38 @@ module math(input logic [4:0] num000, num001, num011, num100,
 			
 			assign num_1 = num000*10 + num001;
 			assign num_2 = num011*10 + num100;
-			always_comb
-		if(enable == 1)
-			begin
-			if(arithmetic == 11)
+			
+	always_comb
+		begin
+			if(enable == 1)
 				begin
-					total = num_1 + num_2;
+				if(arithmetic == 11)
+					begin
+						total = num_1 + num_2;
+					end
+				else if(arithmetic == 12)
+					begin
+						total = num_1 - num_2;
+					end
+				else if(arithmetic == 13)
+					begin
+						total = num_1 * num_2;
+					end
+				else if(arithmetic == 14)
+					begin
+						total = num_1 / num_2;
+					end
 				end
-			else if(arithmetic == 12)
+			else if (enable == 0)
 				begin
-					total = num_1 - num_2;
+					if(num_state == 3'b000 || num_state == 3'b001) 		
+						total = num_1;
+					else if (num_state == 3'b010)
+						total = num_2;
+					
+					//total = num_1 * 100 + num_2;
 				end
-			else if(arithmetic == 13)
-				begin
-					total = num_1 * num_2;
-				end
-			else if(arithmetic == 14)
-				begin
-					total = num_1 / num_2;
-				end
-			end
-		else if (enable == 0)
-			begin
-				if(num_state == 3'b000) 		
-					total = num_1;
-				else if (num_state == 3'b010)
-					total = num_2;
-			end
+		end
 			
 			
 endmodule		

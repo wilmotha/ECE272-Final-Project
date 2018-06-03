@@ -3,8 +3,8 @@ module LED_top_module(
 	/* Set inputs and outputs */
 	/* to the whole FPGA here */
 	/**************************/
-	input logic reset_n,
-	input logic [15:0] button,
+	input wire reset_n,
+	input wire [15:0] button,
 	
 	output logic [6:0] sevenseg,
 	output logic [2:0] state);
@@ -17,14 +17,18 @@ module LED_top_module(
 	
 		logic [2:0] num_state; 	//look at Operation_State_Machine to understand this
 		logic [2:0] adr;		//Adress in the memory
-		logic we;
+		//logic we;
 	
 		logic enable;
 		logic [13:0] total;
 		logic [4:0] value;
-		logic [3:0] muxToDec;
+		logic [4:0] muxToDec;
 		
-		logic [4:0] tens_mem_1, ones_mem_1, arithmetic, tens_mem_2, ones_mem_2;
+		logic [4:0] tens_mem_1;
+		logic [4:0] ones_mem_1;
+		logic [4:0] tens_mem_2;
+		logic [4:0] ones_mem_2;
+		logic [4:0] arithmetic;
 		
 		logic [4:0] thous;
 		logic [4:0] hundr;
@@ -42,23 +46,35 @@ module LED_top_module(
 	
 		Button_Verify verify( 
 			.num_state(num_state),
+			.reset_n(reset_n),
 			.value(value),
 			.adr_current(adr),
+			.tens_mem_1(tens_mem_1),
+			.ones_mem_1(ones_mem_1),
+			.arith(arithmetic),
+			.tens_mem_2(tens_mem_2),
+			.ones_mem_2(ones_mem_2),
 			
-			.we(we),
+			
+			
+			.tens_1(tens_mem_1),
+			.ones_1(ones_mem_1),
+			.arithmetic(arithmetic),
+			.tens_2(tens_mem_2),
+			.ones_2(ones_mem_2),
+			.state(num_state),
+			.adr(adr),
 			.clk_manual(clk_manual));
 	
 			
-	mux4 which( .tens_mem_1(tens_mem_1),
-			.ones_mem_1(ones_mem_1),
-			.tens_mem_2(tens_mem_2),
-			.ones_mem_2(ones_mem_2),
-			.num_state(num_state),
+	mux4 which( 
+			.clk_manual(clk_manual),
+			.reset_n(reset_n),
 			
 			.enable(enable)
 			);
 	
-	ram memory( 
+	/*ram memory( 
 			.clk_manual(clk_manual),
 			.reset_n(reset_n),
 			.we(we),
@@ -70,7 +86,7 @@ module LED_top_module(
 			.arithmetic(arithmetic),
 			.tens_mem_2(tens_mem_2),
 			.ones_mem_2(ones_mem_2),
-			.adr_next(adr));
+			.adr_next(adr));*/
 			
 	mux2 test(
 			.thous(thous),
@@ -102,12 +118,13 @@ module LED_top_module(
 				.z2(tens),
 				.z3(ones) ); 
 	
-	
+	/*
 		Operation_State_Machine operation( 
 			.clk_manual(clk_manual),
 			.reset_n(reset_n),
 			
-			.num_state(num_state));
+			/*.clk(clk_manual),
+			.num_state(num_state)); */
 		
 	
 		
@@ -119,11 +136,11 @@ module LED_top_module(
 
 		
 		//This is an instance of a special, built in module that accesses our chip's oscillator
-		OSCH #("2.08") osc_int (	//"2.08" specifies the operating frequency, 2.08 MHz.
+		/*OSCH #("2.08") osc_int (	//"2.08" specifies the operating frequency, 2.08 MHz.
 									//Other clock frequencies can be found in the MachX02's documentation
 			.STDBY(1'b0),			//Specifies active state
 			.OSC(clk),				//Outputs clock signal to 'clk' net
-			.SEDSTDBY());			//Leaves SEDSTDBY pin unconnected
+			.SEDSTDBY());			//Leaves SEDSTDBY pin unconnected*/
 		
 		
 		//This module is instantiated from another file, 'Clock_Counter.sv'

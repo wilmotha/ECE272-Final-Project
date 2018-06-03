@@ -1,16 +1,12 @@
-module mux4 ( 	input logic [4:0] tens_mem_1, ones_mem_1, tens_mem_2, ones_mem_2,
-				input logic [2:0] num_state,
-				input logic [4:0] arithmetic,
+module mux4 ( 	input logic clk_manual,
+				input logic reset_n,
 				output logic enable );
 			
-
-	logic [13:0] total;
-	
-always_comb
-	if(num_state == 3'b000) 			
-			enable = 0;	
-	else if (num_state == 3'b010)
+always_ff @ (posedge clk_manual, negedge reset_n)
+	begin
+		if(!reset_n)
 			enable = 0;
-	else if (num_state == 3'b011)
+		else
 			enable = 1;	
+	end
 endmodule

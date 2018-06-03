@@ -1,10 +1,10 @@
 //default multiplexer that ouputs to the Decoder.sv
-module mux2 ( 	input logic [3:0] thous,
-				input logic [3:0] hundr,
+module mux2 ( 	input logic [4:0] thous,
+				input logic [4:0] hundr,
 				input logic [4:0] tens,
 				input logic [4:0] ones,
 				input logic [2:0] s,
-				output logic [3:0] y);
+				output logic [4:0] y);
 				
 always_comb
 	begin

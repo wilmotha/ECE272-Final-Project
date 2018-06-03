@@ -1,4 +1,4 @@
-module decoder(input logic [3:0] data,
+module decoder(input logic [4:0] data,
 output logic [6:0] segments);
 always_comb
 case(data)

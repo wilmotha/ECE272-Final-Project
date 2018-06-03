@@ -1,5 +1,6 @@
 module Operation_State_Machine(input logic clk_manual,
 					input logic reset_n,
+					/*output logic clk,*/
 					output logic[2:0] num_state);
 
 logic [2:0] state_n; //next state
@@ -13,9 +14,15 @@ logic [2:0] state_n; //next state
 // state register
 always_ff @(posedge clk_manual, negedge reset_n)
 	if (!reset_n) 
-		num_state <= S0;
+		begin
+			num_state <= S0;
+			//clk <= 0;
+		end
 	else 
-		num_state <= state_n;
+		begin
+			num_state <= state_n;
+			//clk <= 0;
+		end
 // next state logic
 always_comb
 	case (num_state)
