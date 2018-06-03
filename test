@@ -1,0 +1,43 @@
+vsim -gui work.Button_Decoder work.Button_Verify work.clock_counter work.decoder work.LED_top_module work.math work.mux2 work.mux4 work.Parser work.state_machine
+
+add wave /LED_top_module/button
+add wave /LED_top_module/num_state
+add wave /LED_top_module/adr
+add wave /LED_top_module/enable
+add wave /LED_top_module/clk_manual
+add wave /LED_top_module/verify/clk_manual
+add wave /LED_top_module/total 
+add wave /LED_top_module/value
+add wave /LED_top_module/tens_mem_1
+add wave /LED_top_module/ones_mem_1
+add wave /LED_top_module/tens_mem_2
+add wave /LED_top_module/ones_mem_2
+add wave /LED_top_module/arithmetic
+add wave /LED_top_module/button_press/buttons
+add wave /LED_top_module/button_press/value
+#add wave /LED_top_module/verify/*
+add wave /LED_top_module/doMath/total
+add wave /LED_top_module/doMath/num_1
+add wave /LED_top_module/doMath/num_2
+
+add wave /LED_top_module/sevenseg
+add wave /LED_top_module/state
+add wave /LED_top_module/thous
+add wave /LED_top_module/hundr
+add wave /LED_top_module/tens
+add wave /LED_top_module/ones
+
+force /LED_top_module/button 2#1111_1111_1111_1111 @ 0
+force /LED_top_module/reset_n 0 @ 0
+force /LED_top_module/reset_n 1 @ 50
+
+force /LED_top_module/button 2#1111_1111_1111_1101 @ 50
+force /LED_top_module/button 2#1111_1111_1111_1110 @ 150
+force /LED_top_module/button 2#1111_1011_1111_1111 @ 250
+force /LED_top_module/button 2#1111_1111_1111_1101 @ 350
+force /LED_top_module/button 2#1111_1111_1111_1110 @ 450
+
+force /LED_top_module/button 2#1011_1111_1111_1111 @ 550
+
+
+run 650
