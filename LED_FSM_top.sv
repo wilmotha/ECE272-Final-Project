@@ -3,8 +3,8 @@ module LED_top_module(
 	/* Set inputs and outputs */
 	/* to the whole FPGA here */
 	/**************************/
-	input wire reset_n,
-	input wire [15:0] button,
+	input logic reset_n,
+	input logic [15:0] button,
 	
 	output logic [6:0] sevenseg,
 	output logic [2:0] state);

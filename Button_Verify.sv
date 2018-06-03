@@ -70,6 +70,7 @@ always_comb
 										tens_1 = tens_mem_1;
 									end
 						   end	
+						default: ;
 					endcase
 				end
 			end
