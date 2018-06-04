@@ -1,0 +1,35 @@
+vsim -gui work.Button_Decoder work.Button_Verify work.clock_counter work.decoder work.LED_top_module work.math work.mux2 work.mux4 work.Parser work.state_machine
+
+add wave /LED_top_module/button		#Button inputs
+add wave /LED_top_module/total 		#What is being displayed on the seven seg
+add wave /LED_top_module/doMath/num_1   #Output of the first set of numbers
+add wave /LED_top_module/doMath/num_2	#Output of the second set of numbers
+add wave /LED_top_module/value		#Current value press
+add wave /LED_top_module/tens_mem_1	# -
+add wave /LED_top_module/ones_mem_1	# - 
+add wave /LED_top_module/tens_mem_2	# - Values of held memory
+add wave /LED_top_module/ones_mem_2	# -
+add wave /LED_top_module/arithmetic	# -
+
+add wave /LED_top_module/sevenseg	#output of sevenseg
+add wave /LED_top_module/state		#FSM for seven seg
+
+#This section cycles through the clocks
+force /LED_top_module/clk_manual_verify 1 @ 0, 0 @ 25 -repeat 50
+force /LED_top_module/state 0 @ 0, 1 @ 25, 3 @ 50, 4 @ 100 -repeat 100
+
+#This section resets for 50 ns
+force /LED_top_module/button 2#1111_1111_1111_1111 @ 0	
+force /LED_top_module/reset_n 0 @ 0
+force /LED_top_module/reset_n 1 @ 50
+
+#After the reset, begin to input values
+force /LED_top_module/button 2#1111_1111_1111_1101 @ 50		#Value = 2
+force /LED_top_module/button 2#1111_1111_1111_1110 @ 150	#Value = 1
+force /LED_top_module/button 2#1111_1011_1111_1111 @ 250	#Value = 11 (Addition)
+force /LED_top_module/button 2#1111_1111_1111_1101 @ 350	#Value = 2
+force /LED_top_module/button 2#1111_1111_1111_1110 @ 450	#Value = 1
+
+force /LED_top_module/button 2#1011_1111_1111_1111 @ 550	#Value = 15 (Equals)
+
+run 650
