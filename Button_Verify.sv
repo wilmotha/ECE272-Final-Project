@@ -76,7 +76,6 @@ always_ff @ (negedge reset_n, posedge clk_manual_verify)
 										waitt = 1;
 									end
 						   end	
-						default: ;
 					endcase
 				end
 			end
