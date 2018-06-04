@@ -14,10 +14,10 @@ module LED_top_module(
 		logic clk;		//used for the oscillator's 2.08 MHz clock
 		logic clk_slow;	//used for slowed down, 5 Hz clock
 		logic clk_manual;
+		logic clk_manual_verify;
 	
 		logic [2:0] num_state; 	//look at Operation_State_Machine to understand this
 		logic [2:0] adr;		//Adress in the memory
-		//logic we;
 	
 		logic enable;
 		logic [13:0] total;
@@ -47,6 +47,7 @@ module LED_top_module(
 		Button_Verify verify( 
 			.num_state(num_state),
 			.reset_n(reset_n),
+			.clk_manual_verify(clk_manual_verify),
 			.value(value),
 			.adr_current(adr),
 			.tens_mem_1(tens_mem_1),
@@ -136,7 +137,7 @@ module LED_top_module(
 
 		
 		//This is an instance of a special, built in module that accesses our chip's oscillator
-		/*OSCH #("2.08") osc_int (	//"2.08" specifies the operating frequency, 2.08 MHz.
+		OSCH #("2.08") osc_int (	//"2.08" specifies the operating frequency, 2.08 MHz.
 									//Other clock frequencies can be found in the MachX02's documentation
 			.STDBY(1'b0),			//Specifies active state
 			.OSC(clk),				//Outputs clock signal to 'clk' net
@@ -149,6 +150,7 @@ module LED_top_module(
 		clock_counter counter_1(
 			.clk_i(clk),
 			.reset_n(reset_n),
+			.clock_1Hz(clk_manual_verify),
 			.clk_o(clk_slow));
 			
 		//This module is instantiated from another file, 'State_Machine.sv'
