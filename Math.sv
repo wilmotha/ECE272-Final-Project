@@ -40,6 +40,9 @@ module math(input logic [4:0] num000, num001, num011, num100,
 					
 					//total = num_1 * 100 + num_2;
 				end
+			else
+				begin
+				end
 		end
 			
 			

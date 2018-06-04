@@ -4,7 +4,16 @@ module Button_Decoder(input logic [15:0] buttons,
 				
 	//logic [15:0] button = ~buttons;
 
-
+/*
+assign buttons[4] = 1;
+assign buttons[5] = 1;
+assign buttons[6] = 1;
+assign buttons[7] = 1;
+assign buttons[8] = 1;
+assign buttons[9] = 1;
+assign buttons[12] = 1;
+assign buttons[13] = 1;
+*/
 always_comb
 	begin
 		case(buttons)
