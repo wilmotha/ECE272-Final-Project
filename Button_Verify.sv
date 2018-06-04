@@ -1,5 +1,6 @@
 module Button_Verify(input [2:0] num_state,
 					 input logic reset_n,
+					 input logic clk_manual_verify,
 					 input logic [4:0] value,
 					 input logic [2:0] adr_current,
 					 input logic [4:0] tens_mem_1, ones_mem_1, arith, tens_mem_2, ones_mem_2,
@@ -9,8 +10,9 @@ module Button_Verify(input [2:0] num_state,
 					
 				
 logic dont_continue;
-	 
-always_comb
+logic waitt;
+	
+always_ff @ (negedge reset_n, posedge clk_manual_verify)
 	begin
 		if(!reset_n || value == 16)
 			begin
@@ -60,14 +62,18 @@ always_comb
 						   end
 						4: begin 
 								if(dont_continue)
+									begin
 									dont_continue = 0;
-								else
+									waitt = 0;
+									end
+								else if (!waitt)
 									begin
 										ones_2 = value; 
 										tens_2 = tens_mem_2; 
 										arithmetic = arith; 
 										ones_1 = ones_mem_1; 
 										tens_1 = tens_mem_1;
+										waitt = 1;
 									end
 						   end	
 					endcase
@@ -93,5 +99,5 @@ always_comb
 				tens_1 = tens_mem_1;
 			end
 				
-	end
+	end 
 endmodule
